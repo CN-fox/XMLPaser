@@ -28,6 +28,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
         try {
             List<ParserPro> list = BaseParser.parserToList(xmlString, Message.class);
+            assertNotNull(list);
+            assertTrue(list.size()>0);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -37,6 +39,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         String xmlString ="<msg dateTime=\"2014-08-29 06:36\"  type=\"text\" ><content><msg width=\"100\" height=\"100\" imgThumbUri=\"group1/M00/00/0F/Kj4Y5VPrZYiAdTSYAAAsRTcGRLg923_t.jpg\" msgDataBytes=\"11333\" /></content></msg>";
         try {
             List<ParserPro> list = BaseParser.parserToList(xmlString, Message.class);
+            assertNotNull(list);
+            assertTrue(list.size()>0);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -51,6 +55,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 "</msg>";
         try {
             List<ParserPro> list = BaseParser.parserToList(xmlString, Message.class);
+            assertNotNull(list);
+            assertTrue(list.size()>0);
         }catch (Exception e){
             e.printStackTrace();
         }
