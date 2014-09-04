@@ -23,20 +23,9 @@ public class BaseParser {
 
     private BaseParser(){}
 
-    public static List<ParserPro> parser(String xml, Class cls)
+    public static List<ParserPro> parserToList(String xml, Class cls)
             throws Exception {
-        if (TextUtils.isEmpty(xml)) {
-            throw new Exception("source is empty");
-        } else {
-            mProfile.clear();
-        }
-
-        Object instance = cls.newInstance();
-        if (!(instance instanceof ParserPro)) {
-            throw new Exception("unSupport class " + cls.getSimpleName());
-        } else {
-            initProfile((ParserPro) instance, cls);
-        }
+        init(xml, cls);
 
         XmlPullParser parser = getXPP(xml);
         int eventType = parser.getEventType();
@@ -56,6 +45,52 @@ public class BaseParser {
 
         Log.d(TAG, result.toString());
         return result;
+    }
+
+
+    /**
+     * 解析出一个对象
+     * @param xml
+     * @param cls
+     * @return
+     * @throws Exception
+     */
+    public static ParserPro parser(String xml,Class cls) throws Exception{
+        init(xml, cls);
+
+        XmlPullParser parser = getXPP(xml);
+        int eventType = parser.getEventType();
+
+        ParserPro newInstance = null;
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            newInstance = parser(parser, cls);
+            if (newInstance != null) {
+                do {
+                    ;
+                } while (parserChild(parser, newInstance));
+                break;
+            } else {
+                Log.d(TAG, "get null");
+            }
+            eventType = parser.getEventType();
+        }
+
+        return newInstance;
+    }
+
+    private static void init(String xml, Class cls) throws Exception {
+        if (TextUtils.isEmpty(xml)) {
+            throw new Exception("source is empty");
+        } else {
+            mProfile.clear();
+        }
+
+        Object instance = cls.newInstance();
+        if (!(instance instanceof ParserPro)) {
+            throw new Exception("unSupport class " + cls.getSimpleName());
+        } else {
+            initProfile((ParserPro) instance, cls);
+        }
     }
 
     private static XmlPullParser getXPP(String xml) throws Exception {
