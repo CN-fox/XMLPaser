@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 
- * @author Hanshuang 2014年8月22日16:37:2
+ * @author w_q
  * 
  */
 public interface ParserPro {
